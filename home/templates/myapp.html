@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Countdown Timer</title>
+</head>
+<body>
+    <h1>Event Countdown Timer</h1>
+    <div id="timer">
+        <h3 id="event">{{ data.name }}</h3>
+        <h2>Time Remaining:</h2>
+        <div id="countdown">
+            {{ data.hours|stringformat:"02d" }} : {{ data.minutes|stringformat:"02d" }} : {{ data.seconds|stringformat:"02d" }}
+        </div>
+    </div>
+    <script>
+        // Function to update the countdown timer
+        function updateTimer(){
+            var hours = parseInt(document.getElementById('countdown').textContent.split(':')[0]);
+            var minutes = parseInt(document.getElementById('countdown').textContent.split(':')[1]);
+            var seconds = parseInt(document.getElementById('countdown').textContent.split(':')[2]);
+            if (seconds>0){
+                seconds--;
+            }
+            else{
+                if (minutes>0){
+                    minutes--;
+                    seconds=59;
+                }
+                else {
+                    if (hours>0){
+                        hours--;
+                        minutes = 59;
+                        seconds = 59;
+                    }
+                    else {
+                        // Timer has reached zero, you can handle this case as needed
+                    }
+                }
+            }
+
+            // Update the timer display
+            document.getElementById('countdown').textContent =
+                (hours < 10 ? '0' : '') + hours + ' : ' +
+                (minutes < 10 ? '0' : '') + minutes + ' : ' +
+                (seconds < 10 ? '0' : '') + seconds;
+        }
+        // Update the timer every second
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
